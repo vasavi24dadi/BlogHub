@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -7,11 +8,11 @@ const fs = require('fs');
 const path = require('path');
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 // Supabase Configuration
-const SUPABASE_URL = 'https://ehcpirxufdkrdjgoioxm.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVoY3Bpcnh1ZmRrcmRqZ29pb3htIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgzMTY3MjMsImV4cCI6MjA5Mzg5MjcyM30.PCCLvXjyy95oLJFQCbIRwJPdrwNx7cV1RfqHrwbYJzc';
+const SUPABASE_URL = process.env.SUPABASE_URL;
+const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
 
 // Initialize Supabase Client
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);

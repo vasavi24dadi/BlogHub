@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:5000/api';
+const API_URL = 'https://bloghub-o4he.onrender.com/api';
 let allBlogs = [];
 let filteredBlogs = [];
 let currentFilter = 'all';

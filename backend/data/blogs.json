@@ -1,0 +1,13 @@
+[
+  {
+    "id": 1,
+    "title": "Welcome to BlogHub - Your Information Portal",
+    "content": "<h2>Welcome to BlogHub!</h2><p>We are thrilled to launch BlogHub, a modern platform for sharing and discovering the latest updates on government jobs, exam results, admit cards, and much more.</p><h3>What We Offer:</h3><ul><li>Real-time job notifications</li><li>Latest admit card updates</li><li>Exam results and announcements</li><li>Important news and updates</li><li>Career guidance and tips</li></ul><p>Start exploring our platform and stay updated with everything that matters to you!</p>",
+    "category": "News",
+    "featured_image": "https://via.placeholder.com/400x200?text=Welcome+to+BlogHub",
+    "author": "Admin",
+    "created_at": "2026-05-01T00:00:00Z",
+    "updated_at": "2026-05-01T00:00:00Z",
+    "views": 0
+  }
+]

@@ -1,7 +1,7 @@
 // Dynamic API URL for development and production
 const API_URL = window.location.hostname === 'localhost'
     ? 'http://localhost:5000/api'
-    : 'https://your-render-backend-url.onrender.com/api'; // Replace with your actual Render URL
+    : 'https://bloghub-1-1boa.onrender.com/api'; // Replace with your actual Render URL
 let currentUser = null;
 let authToken = null;
 let currentEditingBlogId = null;
@@ -387,7 +387,7 @@ async function handleEditBlogSelect(e) {
             const img = document.getElementById('editPreviewImg');
             const baseUrl = window.location.hostname === 'localhost'
                 ? 'http://localhost:5000'
-                : 'https://your-render-backend-url.onrender.com'; // Replace with your actual Render URL
+                : 'https://bloghub-1-1boa.onrender.com'; // Replace with your actual Render URL
             img.src = blog.featured_image.startsWith('http') ? blog.featured_image : `${baseUrl}${blog.featured_image}`;
             preview.style.display = 'block';
         } else {

@@ -1,9 +1,102 @@
-const API_URL = 'https://bloghub-o4he.onrender.com/api';
+const API_URL = 'http://localhost:5000/api';
 let currentUser = null;
 let authToken = null;
 let currentEditingBlogId = null;
 let allBlogs = [];
 let drafts = [];
+
+// File Upload Helper Functions - Define before DOMContentLoaded
+function showImagePreview(inputElement, previewContainerId, previewImgId) {
+    const file = inputElement.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const preview = document.getElementById(previewContainerId);
+            const img = document.getElementById(previewImgId);
+            img.src = e.target.result;
+            preview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
+async function uploadImageFile(fileInputId, previewContainerId, previewImgId, urlInputId) {
+    const fileInput = document.getElementById(fileInputId);
+    const file = fileInput.files[0];
+    
+    if (!file) {
+        alert('Please select an image first');
+        return;
+    }
+    
+    const formData = new FormData();
+    formData.append('image', file);
+    
+    try {
+        const response = await fetch(`${API_URL}/upload`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${authToken}`
+            },
+            body: formData
+        });
+        
+        if (response.ok) {
+            const data = await response.json();
+            const relativePath = data.imageUrl;
+            const previewUrl = `http://localhost:5000${relativePath}`;
+            
+            // Store the relative path in the hidden input
+            document.getElementById(urlInputId).value = relativePath;
+            
+            // Show preview using absolute URL
+            const preview = document.getElementById(previewContainerId);
+            const img = document.getElementById(previewImgId);
+            img.src = previewUrl;
+            preview.style.display = 'block';
+            
+            alert('Image uploaded successfully!');
+        } else {
+            alert('Failed to upload image');
+        }
+    } catch (error) {
+        console.error('Error uploading image:', error);
+        alert('Error uploading image');
+    }
+}
+
+async function uploadImage(fileInputId) {
+    const fileInput = document.getElementById(fileInputId);
+    const file = fileInput.files[0];
+    
+    if (!file) {
+        return null;
+    }
+    
+    const formData = new FormData();
+    formData.append('image', file);
+    
+    try {
+        const response = await fetch(`${API_URL}/upload`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${authToken}`
+            },
+            body: formData
+        });
+        
+        if (response.ok) {
+            const data = await response.json();
+            return data.imageUrl;
+        } else {
+            console.error('Upload failed:', response.status);
+            return null;
+        }
+    } catch (error) {
+        console.error('Error uploading image:', error);
+        return null;
+    }
+}
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
@@ -25,6 +118,28 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (document.getElementById('logoutBtn')) {
         document.getElementById('logoutBtn').addEventListener('click', handleLogout);
+    }
+
+    // File upload preview listeners
+    if (document.getElementById('featuredImage')) {
+        document.getElementById('featuredImage').addEventListener('change', (e) => {
+            showImagePreview(e.target, 'imagePreview', 'previewImg');
+        });
+    }
+    if (document.getElementById('editFeaturedImage')) {
+        document.getElementById('editFeaturedImage').addEventListener('change', (e) => {
+            showImagePreview(e.target, 'editImagePreview', 'editPreviewImg');
+        });
+    }
+    if (document.getElementById('uploadFeaturedImageBtn')) {
+        document.getElementById('uploadFeaturedImageBtn').addEventListener('click', () => {
+            uploadImageFile('featuredImage', 'imagePreview', 'previewImg', 'featuredImageUrl');
+        });
+    }
+    if (document.getElementById('uploadEditFeaturedImageBtn')) {
+        document.getElementById('uploadEditFeaturedImageBtn').addEventListener('click', () => {
+            uploadImageFile('editFeaturedImage', 'editImagePreview', 'editPreviewImg', 'editFeaturedImageUrl');
+        });
     }
 
     // Search and Filter
@@ -119,7 +234,6 @@ async function handleCreateBlog(e) {
     
     const title = document.getElementById('blogTitle').value;
     const category = document.getElementById('blogCategory').value;
-    const featured_image = document.getElementById('featuredImage').value;
     const content = document.getElementById('blogContent').value;
 
     if (!title || !category || !content) {
@@ -128,6 +242,14 @@ async function handleCreateBlog(e) {
     }
 
     try {
+        let featured_image = document.getElementById('featuredImageUrl').value || 
+                            document.getElementById('featuredImageUrlManual').value || null;
+        const fileInput = document.getElementById('featuredImage');
+        if (!featured_image && fileInput.files.length > 0) {
+            featured_image = await uploadImage('featuredImage');
+            document.getElementById('featuredImageUrl').value = featured_image || '';
+        }
+
         const response = await fetch(`${API_URL}/blogs`, {
             method: 'POST',
             headers: {
@@ -141,6 +263,9 @@ async function handleCreateBlog(e) {
             document.getElementById('blogTitle').value = '';
             document.getElementById('blogCategory').value = '';
             document.getElementById('featuredImage').value = '';
+            document.getElementById('featuredImageUrl').value = '';
+            document.getElementById('featuredImageUrlManual').value = '';
+            document.getElementById('imagePreview').style.display = 'none';
             document.getElementById('blogContent').value = '';
             alert('Blog created successfully!');
             loadBlogs();
@@ -245,8 +370,21 @@ async function handleEditBlogSelect(e) {
         currentEditingBlogId = blog.id;
         document.getElementById('editBlogTitle').value = blog.title;
         document.getElementById('editBlogCategory').value = blog.category;
-        document.getElementById('editFeaturedImage').value = blog.featured_image || '';
+        document.getElementById('editFeaturedImage').value = '';
+        document.getElementById('editFeaturedImageUrl').value = blog.featured_image || '';
+        document.getElementById('editFeaturedImageUrlManual').value = blog.featured_image || '';
         document.getElementById('editBlogContent').value = blog.content;
+        
+        // Show existing image if available
+        if (blog.featured_image) {
+            const preview = document.getElementById('editImagePreview');
+            const img = document.getElementById('editPreviewImg');
+            img.src = blog.featured_image.startsWith('http') ? blog.featured_image : `http://localhost:5000${blog.featured_image}`;
+            preview.style.display = 'block';
+        } else {
+            document.getElementById('editImagePreview').style.display = 'none';
+        }
+        
         document.getElementById('editBlogForm').style.display = 'block';
     } catch (error) {
         console.error('Error loading blog:', error);
@@ -265,10 +403,17 @@ async function handleUpdateBlog(e) {
 
     const title = document.getElementById('editBlogTitle').value;
     const category = document.getElementById('editBlogCategory').value;
-    const featured_image = document.getElementById('editFeaturedImage').value;
     const content = document.getElementById('editBlogContent').value;
 
     try {
+        let featured_image = document.getElementById('editFeaturedImageUrl').value || 
+                            document.getElementById('editFeaturedImageUrlManual').value || null;
+        const fileInput = document.getElementById('editFeaturedImage');
+        if (!featured_image && fileInput.files.length > 0) {
+            featured_image = await uploadImage('editFeaturedImage');
+            document.getElementById('editFeaturedImageUrl').value = featured_image || '';
+        }
+
         const response = await fetch(`${API_URL}/blogs/${currentEditingBlogId}`, {
             method: 'PUT',
             headers: {
@@ -423,7 +568,8 @@ function saveDraft() {
     const title = document.getElementById('blogTitle').value;
     const content = document.getElementById('blogContent').value;
     const category = document.getElementById('blogCategory').value;
-    const featured_image = document.getElementById('featuredImage').value;
+    const featured_image = document.getElementById('featuredImageUrl').value || 
+                          document.getElementById('featuredImageUrlManual').value;
     
     if (!title || !content || !category) {
         alert('Please fill in all required fields');
@@ -444,6 +590,7 @@ function saveDraft() {
     alert('Blog saved as draft!');
     document.getElementById('createBlogForm').reset();
 }
+
 
 function loadDrafts() {
     const saved = localStorage.getItem('blogDrafts');
@@ -479,7 +626,8 @@ function editDraft(index) {
         document.getElementById('blogTitle').value = draft.title;
         document.getElementById('blogContent').value = draft.content;
         document.getElementById('blogCategory').value = draft.category;
-        document.getElementById('featuredImage').value = draft.featured_image;
+        document.getElementById('featuredImageUrlManual').value = draft.featured_image || '';
+        document.getElementById('featuredImageUrl').value = draft.featured_image || '';
         deleteDraft(index);
         
         document.querySelectorAll('.sidebar-btn').forEach(b => b.classList.remove('active'));

@@ -107,8 +107,16 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="featuredImage">Featured Image URL:</label>
-                                    <input type="url" id="featuredImage" name="featured_image" placeholder="https://example.com/image.jpg">
+                                    <label for="featuredImage">Featured Image:</label>
+                                    <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                                        <input type="file" id="featuredImage" name="featured_image" accept="image/*" style="flex: 1;">
+                                        <button type="button" id="uploadFeaturedImageBtn" class="btn btn-secondary">📤 Upload Image</button>
+                                    </div>
+                                    <div id="imagePreview" style="margin-top: 10px; display: none;">
+                                        <img id="previewImg" style="max-width: 200px; max-height: 200px; border-radius: 4px; border: 2px solid #667eea;">
+                                    </div>
+                                    <input type="hidden" id="featuredImageUrl" name="featured_image_url">
+                                    <input type="text" id="featuredImageUrlManual" name="featured_image_url_manual" placeholder="Or paste image URL here..." style="width: 100%; padding: 8px; margin-top: 10px; border: 1px solid #ddd; border-radius: 4px;">
                                 </div>
 
                                 <div class="form-group">
@@ -163,8 +171,16 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="editFeaturedImage">Featured Image URL:</label>
-                                    <input type="url" id="editFeaturedImage" name="featured_image">
+                                    <label for="editFeaturedImage">Featured Image:</label>
+                                    <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                                        <input type="file" id="editFeaturedImage" name="featured_image" accept="image/*" style="flex: 1;">
+                                        <button type="button" id="uploadEditFeaturedImageBtn" class="btn btn-secondary">📤 Upload Image</button>
+                                    </div>
+                                    <div id="editImagePreview" style="margin-top: 10px; display: none;">
+                                        <img id="editPreviewImg" style="max-width: 200px; max-height: 200px; border-radius: 4px; border: 2px solid #667eea;">
+                                    </div>
+                                    <input type="hidden" id="editFeaturedImageUrl" name="featured_image_url">
+                                    <input type="text" id="editFeaturedImageUrlManual" name="featured_image_url_manual" placeholder="Or paste image URL here..." style="width: 100%; padding: 8px; margin-top: 10px; border: 1px solid #ddd; border-radius: 4px;">
                                 </div>
 
                                 <div class="form-group">

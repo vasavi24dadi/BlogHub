@@ -1,4 +1,4 @@
-const API_URL = 'https://bloghub-o4he.onrender.com/api';
+const API_URL = 'http://localhost:5000/api';
 let allBlogs = [];
 let filteredBlogs = [];
 let currentFilter = 'all';
@@ -79,7 +79,7 @@ function displayBlogs() {
     container.innerHTML = filteredBlogs.map(blog => `
         <div class="blog-post" onclick="openBlogModal(${blog.id})">
             ${blog.featured_image ? 
-                `<img src="${blog.featured_image}" alt="${blog.title}" class="blog-image" onerror="this.onerror=null;this.src='${FALLBACK_IMAGE_SMALL}'">` : 
+                `<img src="${blog.featured_image.startsWith('http') ? blog.featured_image : 'http://localhost:5000' + blog.featured_image}" alt="${blog.title}" class="blog-image" onerror="this.onerror=null;this.src='${FALLBACK_IMAGE_SMALL}'">` : 
                 '<div class="blog-image"></div>'
             }
             <div class="blog-content">
@@ -116,7 +116,7 @@ async function openBlogModal(blogId) {
         content.innerHTML = `
             <div class="blog-detail-header">
                 ${blog.featured_image ? 
-                    `<img src="http://localhost:5000${blog.featured_image}" alt="${blog.title}" class="blog-detail-image" onerror="this.onerror=null;this.src='${FALLBACK_IMAGE_LARGE}'">` : 
+                    `<img src="${blog.featured_image.startsWith('http') ? blog.featured_image : 'http://localhost:5000' + blog.featured_image}" alt="${blog.title}" class="blog-detail-image" onerror="this.onerror=null;this.src='${FALLBACK_IMAGE_LARGE}'">` : 
                     '<div class="blog-detail-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>'
                 }
                 <span class="blog-detail-category">${blog.category}</span>

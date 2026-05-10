@@ -302,5 +302,8 @@ For issues or questions, please check:
 
 ---
 
+<<<<<<< HEAD
 **Created for**: Skill Assessment Assignment
 **Deadline**: 10 May, 2026
+=======
+>>>>>>> 59c3b8876f716095abe9769a0b4c7fbbf22e620a

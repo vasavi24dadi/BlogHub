@@ -42,6 +42,7 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(express.static('public'));
 
@@ -73,22 +74,22 @@ const authenticate = (req, res, next) => {
 // Login endpoint
 app.post('/api/login', async (req, res) => {
   const { username, password } = req.body;
-  
+
   try {
     const { data: users, error } = await supabase
       .from('users')
       .select('*')
       .eq('username', username)
       .eq('password', password);
-    
+
     if (error) {
       return res.status(401).json({ success: false, message: 'Login failed' });
     }
-    
+
     if (users && users.length > 0) {
       const user = users[0];
-      res.json({ 
-        success: true, 
+      res.json({
+        success: true,
         message: 'Login successful',
         token: 'admin_token_12345',
         user: { id: user.id, username: user.username, email: user.email }
@@ -109,11 +110,11 @@ app.get('/api/blogs', async (req, res) => {
       .from('blogs')
       .select('*')
       .order('created_at', { ascending: false });
-    
+
     if (error) {
       return res.status(500).json({ message: 'Error fetching blogs' });
     }
-    
+
     res.json(blogs || []);
   } catch (error) {
     console.error('Error fetching blogs:', error);
@@ -129,11 +130,11 @@ app.get('/api/blogs/:id', async (req, res) => {
       .select('*')
       .eq('id', parseInt(req.params.id))
       .single();
-    
+
     if (error) {
       return res.status(404).json({ message: 'Blog not found' });
     }
-    
+
     res.json(blog);
   } catch (error) {
     console.error('Error fetching blog:', error);
@@ -144,11 +145,11 @@ app.get('/api/blogs/:id', async (req, res) => {
 // Create new blog (authenticated)
 app.post('/api/blogs', authenticate, async (req, res) => {
   const { title, content, category, featured_image } = req.body;
-  
+
   if (!title || !content || !category) {
     return res.status(400).json({ message: 'Missing required fields' });
   }
-  
+
   try {
     const { data: newBlog, error } = await supabase
       .from('blogs')
@@ -161,12 +162,12 @@ app.post('/api/blogs', authenticate, async (req, res) => {
         views: 0
       }])
       .select();
-    
+
     if (error) {
       console.error('Supabase error:', error);
       return res.status(500).json({ message: 'Error creating blog' });
     }
-    
+
     res.status(201).json(newBlog[0]);
   } catch (error) {
     console.error('Error creating blog:', error);
@@ -178,7 +179,7 @@ app.post('/api/blogs', authenticate, async (req, res) => {
 app.put('/api/blogs/:id', authenticate, async (req, res) => {
   const { title, content, category, featured_image } = req.body;
   const blogId = parseInt(req.params.id);
-  
+
   try {
     const { data: updatedBlog, error } = await supabase
       .from('blogs')
@@ -191,15 +192,15 @@ app.put('/api/blogs/:id', authenticate, async (req, res) => {
       })
       .eq('id', blogId)
       .select();
-    
+
     if (error) {
       return res.status(500).json({ message: 'Error updating blog' });
     }
-    
+
     if (!updatedBlog || updatedBlog.length === 0) {
       return res.status(404).json({ message: 'Blog not found' });
     }
-    
+
     res.json(updatedBlog[0]);
   } catch (error) {
     console.error('Error updating blog:', error);
@@ -210,22 +211,22 @@ app.put('/api/blogs/:id', authenticate, async (req, res) => {
 // Delete blog (authenticated)
 app.delete('/api/blogs/:id', authenticate, async (req, res) => {
   const blogId = parseInt(req.params.id);
-  
+
   try {
     const { data: deletedBlog, error } = await supabase
       .from('blogs')
       .delete()
       .eq('id', blogId)
       .select();
-    
+
     if (error) {
       return res.status(500).json({ message: 'Error deleting blog' });
     }
-    
+
     if (!deletedBlog || deletedBlog.length === 0) {
       return res.status(404).json({ message: 'Blog not found' });
     }
-    
+
     res.json({ message: 'Blog deleted successfully', blog: deletedBlog[0] });
   } catch (error) {
     console.error('Error deleting blog:', error);
@@ -236,9 +237,9 @@ app.delete('/api/blogs/:id', authenticate, async (req, res) => {
 // Upload image
 app.post('/api/upload', authenticate, upload.single('image'), (req, res) => {
   if (req.file) {
-    res.json({ 
-      success: true, 
-      imageUrl: `/uploads/${req.file.filename}` 
+    res.json({
+      success: true,
+      imageUrl: `/uploads/${req.file.filename}`
     });
   } else {
     res.status(400).json({ success: false, message: 'No file uploaded' });
@@ -253,11 +254,11 @@ app.get('/api/category/:category', async (req, res) => {
       .select('*')
       .eq('category', req.params.category)
       .order('created_at', { ascending: false });
-    
+
     if (error) {
       return res.status(500).json({ message: 'Error fetching blogs' });
     }
-    
+
     res.json(blogs || []);
   } catch (error) {
     console.error('Error fetching blogs:', error);
@@ -268,29 +269,29 @@ app.get('/api/category/:category', async (req, res) => {
 // Increment views
 app.put('/api/blogs/:id/view', async (req, res) => {
   const blogId = parseInt(req.params.id);
-  
+
   try {
     const { data: blog, error: fetchError } = await supabase
       .from('blogs')
       .select('views')
       .eq('id', blogId)
       .single();
-    
+
     if (fetchError) {
       return res.status(404).json({ message: 'Blog not found' });
     }
-    
+
     const newViews = (blog.views || 0) + 1;
     const { data: updatedBlog, error: updateError } = await supabase
       .from('blogs')
       .update({ views: newViews })
       .eq('id', blogId)
       .select();
-    
+
     if (updateError) {
       return res.status(500).json({ message: 'Error updating views' });
     }
-    
+
     res.json(updatedBlog[0]);
   } catch (error) {
     console.error('Error updating views:', error);

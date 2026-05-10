@@ -587,7 +587,7 @@ function saveDraft() {
     localStorage.setItem('blogDrafts', JSON.stringify(drafts));
     alert('Blog saved as draft!');
     document.getElementById('createBlogForm').reset();
-}
+
 
 function loadDrafts() {
     const saved = localStorage.getItem('blogDrafts');

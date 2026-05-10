@@ -49,7 +49,7 @@ async function uploadImageFile(fileInputId, previewContainerId, previewImgId, ur
             const relativePath = data.imageUrl;
             const baseUrl = window.location.hostname === 'localhost'
                 ? 'http://localhost:5000'
-                : 'https://your-render-backend-url.onrender.com'; // Replace with your actual Render URL
+                : 'https://bloghub-1-1boa.onrender.com'; // Replace with your actual Render URL
             const previewUrl = `${baseUrl}${relativePath}`;
             
             // Store the relative path in the hidden input

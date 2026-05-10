@@ -1,7 +1,7 @@
 // Dynamic API URL for development and production
 const API_URL = window.location.hostname === 'localhost'
     ? 'http://localhost:5000/api'
-    : 'https://your-render-backend-url.onrender.com/api'; // Replace with your actual Render URL
+    : 'https://bloghub-1-1boa.onrender.com'; // Replace with your actual Render URL
 let allBlogs = [];
 let filteredBlogs = [];
 let currentFilter = 'all';

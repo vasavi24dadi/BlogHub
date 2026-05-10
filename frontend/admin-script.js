@@ -98,8 +98,6 @@ async function uploadImage(fileInputId) {
     }
 }
 
-=======
->>>>>>> 59c3b8876f716095abe9769a0b4c7fbbf22e620a
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
     const savedToken = localStorage.getItem('authToken');
@@ -122,7 +120,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('logoutBtn').addEventListener('click', handleLogout);
     }
 
-<<<<<<< HEAD
     // File upload preview listeners
     if (document.getElementById('featuredImage')) {
         document.getElementById('featuredImage').addEventListener('change', (e) => {
@@ -145,8 +142,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-=======
->>>>>>> 59c3b8876f716095abe9769a0b4c7fbbf22e620a
     // Search and Filter
     if (document.getElementById('blogSearch')) {
         document.getElementById('blogSearch').addEventListener('input', searchBlogs);
@@ -239,10 +234,6 @@ async function handleCreateBlog(e) {
     
     const title = document.getElementById('blogTitle').value;
     const category = document.getElementById('blogCategory').value;
-<<<<<<< HEAD
-=======
-    const featured_image = document.getElementById('featuredImage').value;
->>>>>>> 59c3b8876f716095abe9769a0b4c7fbbf22e620a
     const content = document.getElementById('blogContent').value;
 
     if (!title || !category || !content) {
@@ -251,8 +242,7 @@ async function handleCreateBlog(e) {
     }
 
     try {
-<<<<<<< HEAD
-        let featured_image = document.getElementById('featuredImageUrl').value || 
+        let featured_image = document.getElementById('featuredImageUrl').value ||
                             document.getElementById('featuredImageUrlManual').value || null;
         const fileInput = document.getElementById('featuredImage');
         if (!featured_image && fileInput.files.length > 0) {
@@ -260,8 +250,6 @@ async function handleCreateBlog(e) {
             document.getElementById('featuredImageUrl').value = featured_image || '';
         }
 
-=======
->>>>>>> 59c3b8876f716095abe9769a0b4c7fbbf22e620a
         const response = await fetch(`${API_URL}/blogs`, {
             method: 'POST',
             headers: {
@@ -275,12 +263,9 @@ async function handleCreateBlog(e) {
             document.getElementById('blogTitle').value = '';
             document.getElementById('blogCategory').value = '';
             document.getElementById('featuredImage').value = '';
-<<<<<<< HEAD
             document.getElementById('featuredImageUrl').value = '';
             document.getElementById('featuredImageUrlManual').value = '';
             document.getElementById('imagePreview').style.display = 'none';
-=======
->>>>>>> 59c3b8876f716095abe9769a0b4c7fbbf22e620a
             document.getElementById('blogContent').value = '';
             alert('Blog created successfully!');
             loadBlogs();
@@ -385,12 +370,11 @@ async function handleEditBlogSelect(e) {
         currentEditingBlogId = blog.id;
         document.getElementById('editBlogTitle').value = blog.title;
         document.getElementById('editBlogCategory').value = blog.category;
-<<<<<<< HEAD
         document.getElementById('editFeaturedImage').value = '';
         document.getElementById('editFeaturedImageUrl').value = blog.featured_image || '';
         document.getElementById('editFeaturedImageUrlManual').value = blog.featured_image || '';
         document.getElementById('editBlogContent').value = blog.content;
-        
+
         // Show existing image if available
         if (blog.featured_image) {
             const preview = document.getElementById('editImagePreview');
@@ -400,11 +384,7 @@ async function handleEditBlogSelect(e) {
         } else {
             document.getElementById('editImagePreview').style.display = 'none';
         }
-        
-=======
-        document.getElementById('editFeaturedImage').value = blog.featured_image || '';
-        document.getElementById('editBlogContent').value = blog.content;
->>>>>>> 59c3b8876f716095abe9769a0b4c7fbbf22e620a
+
         document.getElementById('editBlogForm').style.display = 'block';
     } catch (error) {
         console.error('Error loading blog:', error);
@@ -415,7 +395,7 @@ async function handleEditBlogSelect(e) {
 // Update Blog
 async function handleUpdateBlog(e) {
     e.preventDefault();
-    
+
     if (!currentEditingBlogId) {
         alert('No blog selected');
         return;
@@ -423,11 +403,10 @@ async function handleUpdateBlog(e) {
 
     const title = document.getElementById('editBlogTitle').value;
     const category = document.getElementById('editBlogCategory').value;
-<<<<<<< HEAD
     const content = document.getElementById('editBlogContent').value;
 
     try {
-        let featured_image = document.getElementById('editFeaturedImageUrl').value || 
+        let featured_image = document.getElementById('editFeaturedImageUrl').value ||
                             document.getElementById('editFeaturedImageUrlManual').value || null;
         const fileInput = document.getElementById('editFeaturedImage');
         if (!featured_image && fileInput.files.length > 0) {
@@ -622,10 +601,6 @@ function saveDraft() {
     document.getElementById('createBlogForm').reset();
 }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 59c3b8876f716095abe9769a0b4c7fbbf22e620a
 function loadDrafts() {
     const saved = localStorage.getItem('blogDrafts');
     drafts = saved ? JSON.parse(saved) : [];
@@ -660,12 +635,8 @@ function editDraft(index) {
         document.getElementById('blogTitle').value = draft.title;
         document.getElementById('blogContent').value = draft.content;
         document.getElementById('blogCategory').value = draft.category;
-<<<<<<< HEAD
         document.getElementById('featuredImageUrlManual').value = draft.featured_image || '';
         document.getElementById('featuredImageUrl').value = draft.featured_image || '';
-=======
-        document.getElementById('featuredImage').value = draft.featured_image;
->>>>>>> 59c3b8876f716095abe9769a0b4c7fbbf22e620a
         deleteDraft(index);
         
         document.querySelectorAll('.sidebar-btn').forEach(b => b.classList.remove('active'));

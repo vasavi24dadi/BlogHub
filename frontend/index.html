@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Platform - Read Latest Updates</title>
+    <link rel="stylesheet" href="blog-styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <h1 class="logo">BlogHub</h1>
+                <nav class="nav">
+                    <a href="#" class="nav-link active">Home</a>
+                    <a href="#admin-link" class="nav-link" onclick="goToAdmin()">Admin Panel</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h2>Latest Updates & News</h2>
+            <p>Stay informed with the latest job updates, admit cards, and results</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container main-content">
+        <!-- Sidebar Filters -->
+        <aside class="sidebar">
+            <div class="filter-section">
+                <h3>Filter by Category</h3>
+                <div class="filter-options">
+                    <button class="filter-btn active" data-category="all">All Blogs</button>
+                    <button class="filter-btn" data-category="Latest Jobs">📋 Latest Jobs</button>
+                    <button class="filter-btn" data-category="Admit Card">📄 Admit Card</button>
+                    <button class="filter-btn" data-category="Results">✓ Results</button>
+                    <button class="filter-btn" data-category="News">📰 News</button>
+                    <button class="filter-btn" data-category="Updates">🔔 Updates</button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Blogs Section -->
+        <section class="blogs-section">
+            <div class="blogs-header">
+                <h2>All Blogs</h2>
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="🔍 Search blogs...">
+                    <span class="search-icon">🔍</span>
+                </div>
+            </div>
+
+            <div id="blogsContainer" class="blogs-container">
+                <div class="loading-spinner">
+                    <p>Loading blogs...</p>
+                </div>
+            </div>
+
+            <!-- Recommendations Section -->
+            <section id="recommendationsSection" style="display: none; margin-top: 60px;">
+                <h3 style="font-size: 22px; margin-bottom: 20px;">📌 Recommended for You</h3>
+                <div id="recommendationsContainer" class="blogs-container">
+                </div>
+            </section>
+        </section>
+    </div>
+
+    <!-- Blog Detail Modal -->
+    <div id="blogModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeBlogModal()">×</button>
+            <div id="blogDetailContent"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <!-- Comments Section -->
+                <div class="footer-section">
+                    <h3>💬 Comments</h3>
+                    <form id="commentForm" class="comment-form">
+                        <input type="text" id="commentName" placeholder="Your name" required>
+                        <textarea id="commentText" placeholder="Your comment..." required></textarea>
+                        <button type="submit" class="btn btn-primary">Post Comment</button>
+                    </form>
+                    <div id="commentsContainer" class="comments-list"></div>
+                </div>
+
+                <!-- Social Sharing Section -->
+                <div class="footer-section">
+                    <h3>📤 Share This Blog:</h3>
+                    <div class="share-buttons">
+                        <button onclick="shareOnFacebook()" class="btn btn-secondary">Facebook</button>
+                        <button onclick="shareOnTwitter()" class="btn btn-secondary">Twitter</button>
+                        <button onclick="shareViaEmail()" class="btn btn-secondary">Email</button>
+                        <button onclick="copyBlogLink()" class="btn btn-secondary">Copy Link</button>
+                    </div>
+                </div>
+
+                <!-- Contact Section -->
+                <div class="footer-section">
+                    <h3>📞 Contact</h3>
+                    <p>BlogHub Media Pvt. Ltd.</p>
+                    <p>Email: contact@bloghub.com</p>
+                    <p>Phone: +91 98765 43210</p>
+                    <p>Address: 2nd Floor, MG Road, Bengaluru</p>
+                </div>
+
+                <!-- Copyright Section -->
+                <div class="footer-section footer-copyright">
+                    <p>&copy; 2026 BlogHub. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="blog-script.js"></script>
+</body>
+</html>

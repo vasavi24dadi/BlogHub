@@ -1,0 +1,46 @@
+[
+  {
+    "id": 1,
+    "title": "Government Jobs Notification 2026",
+    "content": "<h2>Latest Government Job Openings</h2><p>We are pleased to announce several government job positions for 2026.</p><h3>Key Highlights:</h3><ul><li>Total vacancies: 500+</li><li>Application deadline: 15 May 2026</li><li>Eligibility: Graduate and above</li></ul><p><strong>How to Apply:</strong> Visit the official website and fill the application form.</p>",
+    "category": "Latest Jobs",
+    "featured_image": "https://via.placeholder.com/400x200?text=Government+Jobs",
+    "author": "Admin",
+    "created_at": "2026-05-01T10:00:00Z",
+    "updated_at": "2026-05-01T10:00:00Z",
+    "views": 145
+  },
+  {
+    "id": 2,
+    "title": "Admit Card Released for Bank Exam 2026",
+    "content": "<h2>Important: Admit Card Release</h2><p>The admit card for Bank Recruitment Exam 2026 has been released officially.</p><h3>Important Dates:</h3><ul><li>Admit Card Release Date: 5 May 2026</li><li>Exam Date: 20 May 2026</li><li>Timing: 10:00 AM - 12:00 PM</li></ul><p>Candidates must bring the admit card along with valid ID proof.</p>",
+    "category": "Admit Card",
+    "featured_image": "https://via.placeholder.com/400x200?text=Admit+Card",
+    "author": "Admin",
+    "created_at": "2026-05-05T08:30:00Z",
+    "updated_at": "2026-05-05T08:30:00Z",
+    "views": 312
+  },
+  {
+    "id": 3,
+    "title": "SSC Result Announced - Check Now",
+    "content": "<h2>SSC Examination Results Out!</h2><p>The Staff Selection Commission has announced the results of the SSC Combined Graduate Level Examination 2026.</p><h3>Result Details:</h3><table border='1' cellpadding='10'><tr><th>Exam</th><th>Result Date</th><th>Status</th></tr><tr><td>CGL Tier 1</td><td>5 May 2026</td><td>Announced</td></tr><tr><td>CGL Tier 2</td><td>20 May 2026</td><td>Upcoming</td></tr></table><p>Download your result from the official website using your registration number.</p>",
+    "category": "Results",
+    "featured_image": "https://via.placeholder.com/400x200?text=Results",
+    "author": "Admin",
+    "created_at": "2026-05-03T14:15:00Z",
+    "updated_at": "2026-05-03T14:15:00Z",
+    "views": 428
+  },
+  {
+    "id": 4,
+    "title": "Platform Updates and New Features",
+    "content": "<h2>New Features Released</h2><p>We're excited to announce several new features on our platform.</p><h3>What's New:</h3><ul><li><strong>Enhanced Search:</strong> Find blogs faster with improved search functionality</li><li><strong>Better Filtering:</strong> Multiple category filters available</li><li><strong>Mobile Optimization:</strong> Better experience on mobile devices</li><li><strong>Notifications:</strong> Get alerts for new job postings</li></ul><p>Thank you for using our platform!</p>",
+    "category": "Updates",
+    "featured_image": "https://via.placeholder.com/400x200?text=Updates",
+    "author": "Admin",
+    "created_at": "2026-05-04T11:00:00Z",
+    "updated_at": "2026-05-04T11:00:00Z",
+    "views": 87
+  }
+]

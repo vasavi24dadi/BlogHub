@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Admin Panel</title>
+    <link rel="stylesheet" href="admin-styles.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Login Section -->
+        <div id="login-section" class="login-section">
+            <div class="login-card">
+                <h1>🎯 Blog Management System</h1>
+                <h2>Admin Login</h2>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label>Username:</label>
+                        <input type="text" id="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password:</label>
+                        <input type="password" id="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+                <div style="text-align: center; margin-top: 20px;">
+                    <p style="font-size: 12px; color: #666; margin-bottom: 10px;">
+                        Demo Credentials:<br>
+                        Username: <strong>admin</strong><br>
+                        Password: <strong>admin123</strong>
+                    </p>
+                    <a href="index.html" class="btn btn-secondary" style="display: inline-block; margin-top: 10px; text-decoration: none;">← View Blogs as User</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Section -->
+        <div id="dashboard-section" class="dashboard-section" style="display: none;">
+            <div class="dashboard-wrapper">
+                <!-- Navigation Bar -->
+                <nav class="admin-nav">
+                    <div class="nav-header">
+                        <h1>📊 Blog Admin Panel</h1>
+                    </div>
+                    <div class="nav-user">
+                        <span id="userDisplay">Admin User</span>
+                        <a href="index.html" class="btn btn-secondary" style="text-decoration: none; font-size: 12px; padding: 8px 12px;">👁️ View as User</a>
+                        <button id="logoutBtn" class="btn btn-danger">Logout</button>
+                    </div>
+                </nav>
+
+                <!-- Dashboard Content -->
+                <div class="dashboard-content">
+                    <!-- Sidebar -->
+                    <aside class="admin-sidebar">
+                        <button class="sidebar-btn active" data-section="blogs-list"><span>📋</span> All Blogs</button>
+                        <button class="sidebar-btn" data-section="create-blog"><span>➕</span> Create Blog</button>
+                        <button class="sidebar-btn" data-section="edit-blog"><span>✏️</span> Edit Blog</button>
+                        <button class="sidebar-btn" data-section="drafts"><span>📝</span> Drafts</button>
+                        <button class="sidebar-btn" data-section="categories"><span>🏷️</span> Categories</button>
+                    </aside>
+
+                    <!-- Main Content -->
+                    <main class="admin-main">
+                        <!-- All Blogs Section -->
+                        <section id="blogs-list" class="content-section active">
+                            <h2>📚 All Blogs</h2>
+                            <div class="search-filter-bar">
+                                <input type="text" id="blogSearch" placeholder="🔍 Search blogs by title..." class="search-input">
+                                <select id="filterCategory" class="filter-select">
+                                    <option value="">All Categories</option>
+                                    <option value="Latest Jobs">Latest Jobs</option>
+                                    <option value="Admit Card">Admit Card</option>
+                                    <option value="Results">Results</option>
+                                    <option value="News">News</option>
+                                    <option value="Updates">Updates</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div id="blogsList" class="blogs-grid">
+                                <p class="loading">Loading blogs...</p>
+                            </div>
+                        </section>
+
+                        <!-- Create Blog Section -->
+                        <section id="create-blog" class="content-section">
+                            <h2>✍️ Create New Blog</h2>
+                            <form id="createBlogForm" class="blog-form">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="blogTitle">Blog Title:</label>
+                                        <input type="text" id="blogTitle" name="title" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="blogCategory">Category:</label>
+                                        <select id="blogCategory" name="category" required>
+                                            <option value="">Select a category</option>
+                                            <option value="Latest Jobs">Latest Jobs</option>
+                                            <option value="Admit Card">Admit Card</option>
+                                            <option value="Results">Results</option>
+                                            <option value="News">News</option>
+                                            <option value="Updates">Updates</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="featuredImage">Featured Image URL:</label>
+                                    <input type="url" id="featuredImage" name="featured_image" placeholder="https://example.com/image.jpg">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Blog Content:</label>
+                                    <div class="editor-toolbar">
+                                        <button type="button" class="editor-btn" onclick="insertTag('h2')"><strong>H2</strong></button>
+                                        <button type="button" class="editor-btn" onclick="insertTag('h3')"><strong>H3</strong></button>
+                                        <button type="button" class="editor-btn" onclick="insertTag('bold')"><strong>Bold</strong></button>
+                                        <button type="button" class="editor-btn" onclick="insertTag('italic')"><em>Italic</em></button>
+                                        <button type="button" class="editor-btn" onclick="insertTag('underline')"><u>Underline</u></button>
+                                        <button type="button" class="editor-btn" onclick="insertTag('code')"><code>Code</code></button>
+                                        <button type="button" class="editor-btn" onclick="insertList()">List</button>
+                                        <button type="button" class="editor-btn" onclick="insertTable()">Table</button>
+                                    </div>
+                                    <textarea id="blogContent" name="content" placeholder="Write your blog content here..." required style="min-height: 300px;"></textarea>
+                                </div>
+
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary">Publish Now</button>
+                                    <button type="button" class="btn btn-secondary" onclick="saveDraft()">Save as Draft</button>
+                                </div>
+                            </form>
+                        </section>
+
+                        <!-- Edit Blog Section -->
+                        <section id="edit-blog" class="content-section">
+                            <h2>✏️ Edit Blog</h2>
+                            <div class="form-group">
+                                <label for="editBlogSelect">Select Blog to Edit:</label>
+                                <input type="text" id="editSearch" placeholder="Search blogs..." style="width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 4px;">
+                                <select id="editBlogSelect" required style="width: 100%; padding: 10px; margin-bottom: 15px;">
+                                    <option value="">Choose a blog...</option>
+                                </select>
+                            </div>
+                            <form id="editBlogForm" class="blog-form" style="display: none;">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="editBlogTitle">Blog Title:</label>
+                                        <input type="text" id="editBlogTitle" name="title" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="editBlogCategory">Category:</label>
+                                        <select id="editBlogCategory" name="category" required>
+                                            <option value="Latest Jobs">Latest Jobs</option>
+                                            <option value="Admit Card">Admit Card</option>
+                                            <option value="Results">Results</option>
+                                            <option value="News">News</option>
+                                            <option value="Updates">Updates</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="editFeaturedImage">Featured Image URL:</label>
+                                    <input type="url" id="editFeaturedImage" name="featured_image">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Blog Content:</label>
+                                    <div class="editor-toolbar">
+                                        <button type="button" class="editor-btn" onclick="insertTag('h2')"><strong>H2</strong></button>
+                                        <button type="button" class="editor-btn" onclick="insertTag('h3')"><strong>H3</strong></button>
+                                        <button type="button" class="editor-btn" onclick="insertTag('bold')"><strong>Bold</strong></button>
+                                        <button type="button" class="editor-btn" onclick="insertTag('italic')"><em>Italic</em></button>
+                                        <button type="button" class="editor-btn" onclick="insertTag('underline')"><u>Underline</u></button>
+                                        <button type="button" class="editor-btn" onclick="insertTag('code')"><code>Code</code></button>
+                                        <button type="button" class="editor-btn" onclick="insertList()">List</button>
+                                        <button type="button" class="editor-btn" onclick="insertTable()">Table</button>
+                                    </div>
+                                    <textarea id="editBlogContent" name="content" required style="min-height: 300px;"></textarea>
+                                </div>
+
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary">Update Blog</button>
+                                    <button type="button" class="btn btn-danger" onclick="deleteBlog()">Delete Blog</button>
+                                    <button type="button" class="btn btn-secondary" onclick="cancelEdit()">Cancel</button>
+                                </div>
+                            </form>
+                        </section>
+
+                        <!-- Drafts Section -->
+                        <section id="drafts" class="content-section">
+                            <h2>📝 Drafts</h2>
+                            <div id="draftsList" class="blogs-grid">
+                                <p class="loading">Loading drafts...</p>
+                            </div>
+                        </section>
+
+                        <!-- Categories Section -->
+                        <section id="categories" class="content-section">
+                            <h2>🏷️ Categories</h2>
+                            <div class="categories-grid">
+                                <div class="category-card">
+                                    <h3>Latest Jobs</h3>
+                                    <p id="count-latest-jobs">0 blogs</p>
+                                    <a href="#" class="btn btn-primary" onclick="filterByCategory('Latest Jobs'); return false;">View</a>
+                                </div>
+                                <div class="category-card">
+                                    <h3>Admit Card</h3>
+                                    <p id="count-admit-card">0 blogs</p>
+                                    <a href="#" class="btn btn-primary" onclick="filterByCategory('Admit Card'); return false;">View</a>
+                                </div>
+                                <div class="category-card">
+                                    <h3>Results</h3>
+                                    <p id="count-results">0 blogs</p>
+                                    <a href="#" class="btn btn-primary" onclick="filterByCategory('Results'); return false;">View</a>
+                                </div>
+                                <div class="category-card">
+                                    <h3>News</h3>
+                                    <p id="count-news">0 blogs</p>
+                                    <a href="#" class="btn btn-primary" onclick="filterByCategory('News'); return false;">View</a>
+                                </div>
+                                <div class="category-card">
+                                    <h3>Updates</h3>
+                                    <p id="count-updates">0 blogs</p>
+                                    <a href="#" class="btn btn-primary" onclick="filterByCategory('Updates'); return false;">View</a>
+                                </div>
+                                <div class="category-card">
+                                    <h3>Other</h3>
+                                    <p id="count-other">0 blogs</p>
+                                    <a href="#" class="btn btn-primary" onclick="filterByCategory('Other'); return false;">View</a>
+                                </div>
+                            </div>
+                        </section>
+                    </main>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="admin-script.js"></script>
+</body>
+</html>

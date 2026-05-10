@@ -414,12 +414,6 @@ async function handleUpdateBlog(e) {
             document.getElementById('editFeaturedImageUrl').value = featured_image || '';
         }
 
-=======
-    const featured_image = document.getElementById('editFeaturedImage').value;
-    const content = document.getElementById('editBlogContent').value;
-
-    try {
->>>>>>> 59c3b8876f716095abe9769a0b4c7fbbf22e620a
         const response = await fetch(`${API_URL}/blogs/${currentEditingBlogId}`, {
             method: 'PUT',
             headers: {
@@ -574,14 +568,8 @@ function saveDraft() {
     const title = document.getElementById('blogTitle').value;
     const content = document.getElementById('blogContent').value;
     const category = document.getElementById('blogCategory').value;
-<<<<<<< HEAD
     const featured_image = document.getElementById('featuredImageUrl').value || 
                           document.getElementById('featuredImageUrlManual').value;
-=======
-    const featured_image = document.getElementById('featuredImage').value;
->>>>>>> 59c3b8876f716095abe9769a0b4c7fbbf22e620a
-    
-    if (!title || !content || !category) {
         alert('Please fill in all required fields');
         return;
     }

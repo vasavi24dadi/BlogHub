@@ -1,4 +1,7 @@
-const API_URL = 'http://localhost:5000/api';
+// Dynamic API URL for development and production
+const API_URL = window.location.hostname === 'localhost'
+    ? 'http://localhost:5000/api'
+    : 'https://your-render-backend-url.onrender.com/api'; // Replace with your actual Render URL
 let currentUser = null;
 let authToken = null;
 let currentEditingBlogId = null;
@@ -44,7 +47,10 @@ async function uploadImageFile(fileInputId, previewContainerId, previewImgId, ur
         if (response.ok) {
             const data = await response.json();
             const relativePath = data.imageUrl;
-            const previewUrl = `http://localhost:5000${relativePath}`;
+            const baseUrl = window.location.hostname === 'localhost'
+                ? 'http://localhost:5000'
+                : 'https://your-render-backend-url.onrender.com'; // Replace with your actual Render URL
+            const previewUrl = `${baseUrl}${relativePath}`;
             
             // Store the relative path in the hidden input
             document.getElementById(urlInputId).value = relativePath;
@@ -379,7 +385,10 @@ async function handleEditBlogSelect(e) {
         if (blog.featured_image) {
             const preview = document.getElementById('editImagePreview');
             const img = document.getElementById('editPreviewImg');
-            img.src = blog.featured_image.startsWith('http') ? blog.featured_image : `http://localhost:5000${blog.featured_image}`;
+            const baseUrl = window.location.hostname === 'localhost'
+                ? 'http://localhost:5000'
+                : 'https://your-render-backend-url.onrender.com'; // Replace with your actual Render URL
+            img.src = blog.featured_image.startsWith('http') ? blog.featured_image : `${baseUrl}${blog.featured_image}`;
             preview.style.display = 'block';
         } else {
             document.getElementById('editImagePreview').style.display = 'none';
